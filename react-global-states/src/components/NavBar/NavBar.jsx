@@ -5,7 +5,7 @@ import { RiShoppingCart2Line, RiShoppingCartFill } from "react-icons/ri";
 import { BuscaComponent } from "components/Busca/Busca";
 
 const iconeProps = {
-  color: "red",
+  color: "white",
   size: 24,
 };
 
