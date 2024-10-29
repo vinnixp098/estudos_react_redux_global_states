@@ -6,15 +6,14 @@ import { ItemComponent } from "components/Item/ItemComponent";
 
 export function CategoriaView() {
   const { nomeCategoria } = useParams();
-  console.log("nomeCategoria:  ", nomeCategoria);
-  const { categoria, itens } = useSelector((state) => ({
+  const { categoria, itens } = useSelector((state) => {
+    // const regexp = new RegExp(state.busca), 
+    return {
     categoria: state.categorias.find(
       (categoria) => categoria.id === nomeCategoria
     ),
-
     itens: state.itens?.filter((item) => item.categoria === nomeCategoria),
-  }));
-  console.log("itens:  ", itens);
+})};
   return (
     <div>
       <HeaderComponent
@@ -23,8 +22,8 @@ export function CategoriaView() {
         imagem={categoria.header}
       />
       <div className={styles.itens}>
-        {itens?.map(item => (
-          <ItemComponent  key={item.id} {...item} />
+        {itens?.map((item) => (
+          <ItemComponent key={item.id} {...item} />
         ))}
       </div>
     </div>
