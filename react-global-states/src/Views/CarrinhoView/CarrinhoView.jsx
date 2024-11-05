@@ -5,17 +5,19 @@ import { ItemComponent } from "components/Item/ItemComponent";
 import { resetarCarrinho } from "../../redux/reducers/carrinho";
 
 export function CarrinhoView() {
-  const dispatch  = useDispatch();
+  const dispatch = useDispatch();
   const { carrinho, total } = useSelector((state) => {
     let total = 0;
-
+    const regexp = new RegExp(state.busca, "i");
     const carrinhoReduce = state.carrinho.reduce((itens, itemNoCarrinho) => {
       const item = state.itens.find((item) => item.id === itemNoCarrinho.id);
-      total += (item.preco * itemNoCarrinho.quantidade);
-      itens.push({
-        ...item,
-        quantidade: itemNoCarrinho.quantidade,
-      });
+      total += item.preco * itemNoCarrinho.quantidade;
+      if (item.titulo.match(regexp)) {
+        itens.push({
+          ...item,
+          quantidade: itemNoCarrinho.quantidade,
+        });
+      }
       return itens;
     }, []);
     return { carrinho: carrinhoReduce, total: total };
@@ -36,9 +38,10 @@ export function CarrinhoView() {
             Subtotal: <strong>R$ {total.toFixed(2)}</strong>
           </span>
         </div>
-        <button className={styles.finalizar}
-          onClick={()=>{
-            dispatch(resetarCarrinho())
+        <button
+          className={styles.finalizar}
+          onClick={() => {
+            dispatch(resetarCarrinho());
           }}
         >
           Finalizar

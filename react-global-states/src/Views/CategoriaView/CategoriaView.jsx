@@ -7,13 +7,16 @@ import { ItemComponent } from "components/Item/ItemComponent";
 export function CategoriaView() {
   const { nomeCategoria } = useParams();
   const { categoria, itens } = useSelector((state) => {
-    // const regexp = new RegExp(state.busca), 
+    const regexp = new RegExp(state.busca);
     return {
-    categoria: state.categorias.find(
-      (categoria) => categoria.id === nomeCategoria
-    ),
-    itens: state.itens?.filter((item) => item.categoria === nomeCategoria),
-})};
+      categoria: state.categorias.find(
+        (categoria) => categoria.id === nomeCategoria
+      ),
+      itens: state.itens.filter(
+        (item) => item.categoria === nomeCategoria && item.titulo.match(regexp)
+      ),
+    };
+  });
   return (
     <div>
       <HeaderComponent

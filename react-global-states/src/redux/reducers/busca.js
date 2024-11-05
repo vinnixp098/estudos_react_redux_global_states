@@ -12,4 +12,4 @@ const buscaSlice = createSlice({
 });
 
 export const { mudarBusca, resetarBusca } = buscaSlice.actions;
-export default buscaSlice.reducer;
+export default buscaSlice;
